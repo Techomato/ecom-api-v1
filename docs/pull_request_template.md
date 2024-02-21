@@ -1,6 +1,6 @@
 ### Overview
 
-> JIRA Ticket:[ AUTH - 1234 ](https://shoppixa.atlassian.net/browse/AUTH-1234)
+> JIRA Ticket:[ ECOMAPI - 1234 ](https://shoppixa.atlassian.net/browse/ECOMAPI-1234)
 
 **What was the problem:**
 
@@ -11,7 +11,9 @@
 -
 
 **Services to be impacted:**
-- `ecomapi`
+- `ecom-api`
+- `auth`
+- `ecom-app`
 
 **Example Code or Screenshot:**
 ```

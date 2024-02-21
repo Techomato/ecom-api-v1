@@ -1,21 +1,21 @@
 
-# AUTH
+# ECOM-API
 ![](https://img.shields.io/badge/Python-3.11-green.svg)
 
 
 
 
 
-An API layer to authenticate users, sellers and admins.
+ECOMAPI functions as the intermediary layer, facilitating communication between the UI and various microservices. It receives requests from the UI and orchestrates calls to the corresponding microservices. Upon receiving responses, ECOMAPI relays them back to the UI. This architecture centralizes API management, streamlining communication and enhancing scalability and maintainability.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 
 ## Installation
 
-Clone the Git repository `auth`
+Clone the Git repository `ecom-api-v1`
 
-`https://github.com/KoushikMallik-developer/auth-v2.git`
+`https://github.com/KoushikMallik-developer/ecom-api-v1.git`
 
 Create your virtual-environment for `auth` outside of the project root directory.
 
@@ -48,24 +48,9 @@ Run the below commands to make the migrations for database models.
   python .\manage.py makemigrations
   python .\manage.py migrate
 ```
-Redis-Windows download:
-```https://github.com/tporadowski/redis/releases/download/v5.0.14.1/Redis-x64-5.0.14.1.msi```
-
-Install Redis using the installer downloaded.
-Add redis in env var.
-
-Run redis-cli in cmd
-```bash
-  redis-cli
-  ping
-```
 
 Run the server.
 
 ```bash
   python .\manage.py runserver 8080
 ```
-
-## 🔗 Links
-[Staging](https://auth-stg.onrender.com/)\
-[Production](https://auth-shoppixa.onrender.com/)
