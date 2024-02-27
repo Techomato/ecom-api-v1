@@ -90,7 +90,6 @@ WSGI_APPLICATION = "ecomapi.wsgi.application"
 # }
 
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",

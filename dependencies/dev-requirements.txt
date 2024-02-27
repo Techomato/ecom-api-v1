@@ -4,6 +4,7 @@ black==23.9.1
 click==8.1.7
 colorama==0.4.6
 Django==5.0.2
+djangorestframework==3.14.0
 flake8==6.1.0
 flake8-bugbear==23.9.16
 mccabe==0.7.0
@@ -11,7 +12,10 @@ mypy-extensions==1.0.0
 packaging==23.2
 pathspec==0.12.1
 platformdirs==4.2.0
+psycopg2==2.9.9
 pycodestyle==2.11.1
 pyflakes==3.1.0
+python-dotenv==1.0.1
+pytz==2024.1
 sqlparse==0.4.4
 tzdata==2024.1
