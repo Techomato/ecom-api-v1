@@ -24,7 +24,11 @@ from ecomapi import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/products/", include("products.urls")),
-    path('api/v1/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path(
+        "api/v1/swagger/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
 ]
 
 if settings.DEBUG:

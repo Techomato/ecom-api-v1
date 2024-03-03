@@ -5,7 +5,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
-class ExportECOMProductCategory(BaseModel):
+class ExportECOMCategory(BaseModel):
     id: Optional[UUID]
     name: Optional[str]
     product_image: Optional[str]
@@ -17,5 +17,5 @@ class ExportECOMProductCategory(BaseModel):
         super().__init__(**kwargs)
 
 
-class ExportECOMProductCategoryList(BaseModel):
-    category_list: typing.List[ExportECOMProductCategory]
+class ExportECOMCategoryList(BaseModel):
+    category_list: typing.List[ExportECOMCategory]

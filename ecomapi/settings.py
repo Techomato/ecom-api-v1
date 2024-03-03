@@ -172,8 +172,8 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = "/static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
