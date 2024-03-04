@@ -49,3 +49,18 @@ class UserNotAuthenticatedError(ECOMBaseException):
             self.msg = msg
         super().__init__(self.name, self.msg, self.status)
         logging.error(self.msg)
+
+
+class TokenError(ECOMBaseException):
+    def __init__(self, name: Optional[str] = None, msg: Optional[str] = None):
+        self.status = status.HTTP_401_UNAUTHORIZED
+        if not name:
+            self.name = "TokenError"
+        else:
+            self.name = name
+        if not msg:
+            self.msg = "User token may be expired."
+        else:
+            self.msg = msg
+        super().__init__(self.name, self.msg, self.status)
+        logging.error(self.msg)

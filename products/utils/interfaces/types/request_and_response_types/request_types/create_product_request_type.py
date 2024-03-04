@@ -67,7 +67,7 @@ class CreateProductRequestType(BaseModel):
             raise ECOMValueError("Offer Price is required")
 
         if not kwargs.get("countInStock") or int(kwargs.get("countInStock")) <= 0:
-            raise ECOMValueError("Offer Price can not be zero or negative")
+            raise ECOMValueError("Product quantity can not be zero or negative")
 
         super().__init__(**kwargs)
 
