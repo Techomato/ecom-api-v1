@@ -12,3 +12,7 @@ class SubCategory(ECOMBaseModel):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Sub Category"
+        verbose_name_plural = "Sub Categories"

@@ -34,7 +34,7 @@ class ECOMRequests:
             if isinstance(payload, dict):
                 self.payload = json.dumps(payload)
         if not path:
-            raise ECOMRequestsError("Path is required")
+            raise ECOMRequestsError(msg="Path is required")
         if content_type:
             self.content_type = content_type
         if headers:
@@ -59,7 +59,7 @@ class ECOMRequests:
             if isinstance(payload, dict):
                 self.payload = json.dumps(payload)
         if not path:
-            raise ECOMRequestsError("Path is required")
+            raise ECOMRequestsError(msg="Path is required")
         if content_type:
             self.content_type = content_type
         if headers:
