@@ -1,4 +1,3 @@
-import json
 from typing import Optional, List
 
 from _decimal import Decimal
@@ -26,13 +25,8 @@ class CreateProductRequestType(BaseModel):
         if not kwargs.get("name") or len(kwargs.get("name")) < 5:
             raise ECOMValueError("Product name should have length more than 5")
 
-        if not kwargs.get("product_image"):
+        if not kwargs.get("product_image") or len(kwargs.get("product_image")) < 9:
             raise ECOMValueError("Product image is required")
-
-        if kwargs.get("product_image_list") and isinstance(
-            kwargs.get("product_image_list"), list
-        ):
-            kwargs["product_image_list"] = json.dumps(kwargs.get("product_image_list"))
 
         if not kwargs.get("brand"):
             raise ECOMValueError("Brand Name is required")
@@ -52,6 +46,8 @@ class CreateProductRequestType(BaseModel):
             actual_price = Decimal(kwargs.get("actual_price"))
             if actual_price <= 0:
                 raise ECOMValueError("Actual Price can not be zero or negative")
+            if actual_price >= 1000000:
+                raise ECOMValueError("Price can not be greater than Rs.9,99,999")
         else:
             raise ECOMValueError("Actual Price is required")
 

@@ -1,4 +1,5 @@
 import datetime
+import json
 import typing
 from typing import Optional
 from uuid import UUID
@@ -38,6 +39,13 @@ class ExportECOMProduct(BaseModel):
             kwargs["subCategory"] = ExportECOMSubCategory(
                 **kwargs.get("subCategory").model_to_dict()
             )
+        if kwargs.get("product_image_list") and isinstance(
+            kwargs.get("product_image_list"), str
+        ):
+            kwargs["product_image_list"] = json.loads(
+                kwargs.get("product_image_list").replace("'", '"')
+            )
+
         super().__init__(**kwargs)
 
 
