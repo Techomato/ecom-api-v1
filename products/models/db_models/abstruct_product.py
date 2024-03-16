@@ -15,7 +15,9 @@ class AbstractProduct(ECOMBaseModel):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     subCategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True)
     description = models.TextField(null=True, blank=True)
-    rating = models.DecimalField(null=True, blank=True, default=0.0)
+    rating = models.DecimalField(
+        null=True, blank=True, default=0, decimal_places=3, max_digits=5
+    )
     numReviews = models.IntegerField(null=True, blank=True, default=0)
     actual_price = models.DecimalField(
         max_digits=8, decimal_places=2, null=False, blank=False
