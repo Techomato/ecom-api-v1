@@ -64,3 +64,18 @@ class TokenError(ECOMBaseException):
             self.msg = msg
         super().__init__(self.name, self.msg, self.status)
         logging.error(self.msg)
+
+
+class ProductNotFoundError(ECOMBaseException):
+    def __init__(self, name: Optional[str] = None, msg: Optional[str] = None):
+        self.status = status.HTTP_401_UNAUTHORIZED
+        if not name:
+            self.name = "ProductNotFoundError"
+        else:
+            self.name = name
+        if not msg:
+            self.msg = "Product does not exist in our database"
+        else:
+            self.msg = msg
+        super().__init__(self.name, self.msg, self.status)
+        logging.error(self.msg)

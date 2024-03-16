@@ -1,6 +1,7 @@
+from django.core.exceptions import ObjectDoesNotExist
 from psycopg2 import DatabaseError
 from rest_framework.request import Request
-
+from ecom_exceptions.ecom_exceptions import ProductNotFoundError
 from products.models.db_models.product import Product
 from products.models.export_models.export_product import (
     ExportECOMProduct,
@@ -9,6 +10,9 @@ from products.models.export_models.export_product import (
 from products.services.auth_services.seller_services import SellerServices
 from products.utils.interfaces.types.request_and_response_types.request_types.create_product_request_type import (
     CreateProductRequestType,
+)
+from products.utils.interfaces.types.request_and_response_types.request_types.remove_product_request_type import (
+    RemoveProductRequestType,
 )
 from products.utils.interfaces.types.request_and_response_types.response_types.base_response_type import (
     ResponseData,
@@ -36,6 +40,23 @@ class ProductServices:
     def create_new_product_service(
         request_data: CreateProductRequestType, request: Request
     ) -> ResponseData:
-        sellerID = SellerServices().get_seller_id(request=request)
-        request_data.save_to_db(seller_id=sellerID)
+        seller_id = SellerServices().get_seller_id(request=request)
+        request_data.save_to_db(seller_id=seller_id)
         return ResponseData(successMessage="Product has been added successfully.")
+
+    def remove_product_service(
+        self, request_data: RemoveProductRequestType, request: Request
+    ) -> ResponseData:
+        seller_id = SellerServices().get_seller_id(request=request)
+        self._remove_product_from_db_service(
+            product_id=request_data.product_id, seller_id=seller_id
+        )
+        return ResponseData(successMessage="Product has been removed successfully.")
+
+    def _remove_product_from_db_service(self, product_id: str, seller_id: str):
+        try:
+            product = Product.objects.get(id=product_id, seller_id=seller_id)
+
+            product.delete()
+        except ObjectDoesNotExist:
+            raise ProductNotFoundError()

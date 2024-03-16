@@ -23,62 +23,64 @@ class CreateProductRequestType(BaseModel):
 
     def __init__(self, **kwargs):
         if not kwargs.get("name") or len(kwargs.get("name")) < 5:
-            raise ECOMValueError("Product name should have length more than 5")
+            raise ECOMValueError(msg="Product name should have length more than 5")
 
         if not kwargs.get("product_image") or len(kwargs.get("product_image")) < 9:
-            raise ECOMValueError("Product image is required")
+            raise ECOMValueError(msg="Product image is required")
 
         if not kwargs.get("brand"):
-            raise ECOMValueError("Brand Name is required")
+            raise ECOMValueError(msg="Brand Name is required")
 
         if not kwargs.get("category"):
-            raise ECOMValueError("Category Name is required")
+            raise ECOMValueError(msg="Category Name is required")
 
         if not kwargs.get("subCategory"):
-            raise ECOMValueError("Sub Category Name is required")
+            raise ECOMValueError(msg="Sub Category Name is required")
 
         if not kwargs.get("description"):
-            raise ECOMValueError("Description is required")
+            raise ECOMValueError(msg="Description is required")
 
         if kwargs.get("actual_price"):
             if isinstance(kwargs.get("actual_price"), str):
                 kwargs["actual_price"] = kwargs.get("actual_price").strip(' "')
             actual_price = Decimal(kwargs.get("actual_price"))
             if actual_price <= 0:
-                raise ECOMValueError("Actual Price can not be zero or negative")
+                raise ECOMValueError(msg="Actual Price can not be zero or negative")
             if actual_price >= 1000000:
-                raise ECOMValueError("Price can not be greater than Rs.9,99,999")
+                raise ECOMValueError(msg="Price can not be greater than Rs.9,99,999")
         else:
-            raise ECOMValueError("Actual Price is required")
+            raise ECOMValueError(msg="Actual Price is required")
 
         if kwargs.get("offer_price"):
             if isinstance(kwargs.get("offer_price"), str):
                 kwargs["offer_price"] = kwargs.get("offer_price").strip(' "')
             offer_price = Decimal(kwargs.get("offer_price"))
             if offer_price <= 0:
-                raise ECOMValueError("Offer Price can not be zero or negative")
+                raise ECOMValueError(msg="Offer Price can not be zero or negative")
             if kwargs.get("offer_price") > kwargs.get("actual_price"):
-                raise ECOMValueError("Offer Price can not be grater than actual price")
+                raise ECOMValueError(
+                    msg="Offer Price can not be grater than actual price"
+                )
         else:
-            raise ECOMValueError("Offer Price is required")
+            raise ECOMValueError(msg="Offer Price is required")
 
         if not kwargs.get("countInStock") or int(kwargs.get("countInStock")) <= 0:
-            raise ECOMValueError("Product quantity can not be zero or negative")
+            raise ECOMValueError(msg="Product quantity can not be zero or negative")
 
         super().__init__(**kwargs)
 
     def save_to_db(self, seller_id):
         category_type = Category.objects.filter(name=self.category).first()
         if not category_type:
-            raise ECOMValueError("Category is not listed")
+            raise ECOMValueError(msg="Category is not listed")
 
         sub_category_type: SubCategory = SubCategory.objects.filter(
             name=self.subCategory
         ).first()
         if not sub_category_type:
-            raise ECOMValueError("Sub Category is not listed")
+            raise ECOMValueError(msg="Sub Category is not listed")
         elif sub_category_type.category != category_type:
-            raise ECOMValueError("Category & Sub Category are not matching")
+            raise ECOMValueError(msg="Category & Sub Category are not matching")
         self.category = None
         self.subCategory = None
         product: Product = Product(**self.model_dump())
