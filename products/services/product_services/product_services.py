@@ -14,6 +14,9 @@ from products.utils.interfaces.types.request_and_response_types.request_types.cr
 from products.utils.interfaces.types.request_and_response_types.request_types.remove_product_request_type import (
     RemoveProductRequestType,
 )
+from products.utils.interfaces.types.request_and_response_types.request_types.update_product_request_type import (
+    UpdateProductRequestType,
+)
 from products.utils.interfaces.types.request_and_response_types.response_types.base_response_type import (
     ResponseData,
 )
@@ -60,3 +63,10 @@ class ProductServices:
             product.delete()
         except ObjectDoesNotExist:
             raise ProductNotFoundError()
+
+    def update_product_service(
+        self, request_data: UpdateProductRequestType, request: Request
+    ) -> ResponseData:
+        seller_id = SellerServices().get_seller_id(request=request)
+        request_data.update_product_in_db(seller_id=seller_id)
+        return ResponseData(successMessage="Product has been updated successfully.")
