@@ -89,3 +89,13 @@ def validate_product_request_data(data: dict):
     validate_product_name(data.get("product_name"))
     validate_product_image(data.get("image"))
     validation_product_image_list(data.get("product_image_list"))
+
+
+def validate_category(category: dict):
+    if not category.get("category_name"):
+        raise ECOMValueError(msg="Category Name is required")
+
+    validate_product_image(category.get("image"))
+
+    if category.get("description") == "":
+        raise ECOMValueError(msg="Description can not be empty")
