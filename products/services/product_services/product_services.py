@@ -80,4 +80,4 @@ class ProductServices:
         seller_id = SellerServices().get_seller_id(request=request)
         if seller_id:
             request_data.save_to_db()
-        return ResponseData(successMessage="Category has been added successfully.")
+            return ResponseData(successMessage="Category has been added successfully.")

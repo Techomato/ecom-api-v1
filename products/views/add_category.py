@@ -35,7 +35,7 @@ class AddCategoryView(APIView):
 
             return Response(
                 data=result.model_dump(),
-                status=status.HTTP_200_OK,
+                status=status.HTTP_201_CREATED,
                 content_type="application/json",
             )
         except ECOMBaseException as e:
