@@ -79,4 +79,4 @@ class ProductServices:
         seller_id = SellerServices().get_seller_id(request=request)
         if seller_id:
             request_data.save_to_db(seller_id=seller_id)
-        return ResponseData(successMessage="Product has been updated successfully.")
+        return ResponseData(successMessage="Sub Category has been added successfully.")

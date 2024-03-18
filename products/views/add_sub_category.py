@@ -19,7 +19,7 @@ from products.utils.interfaces.types.request_and_response_types.response_types.b
 )
 
 
-class UpdateProductView(APIView):
+class AddSubCategoryView(APIView):
     renderer_classes = [JSONRenderer]
 
     # @extend_schema(
@@ -34,7 +34,7 @@ class UpdateProductView(APIView):
 
             return Response(
                 data=result.model_dump(),
-                status=status.HTTP_200_OK,
+                status=status.HTTP_201_CREATED,
                 content_type="application/json",
             )
         except ECOMBaseException as e:

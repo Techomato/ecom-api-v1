@@ -16,8 +16,11 @@ class AddSubCategoryRequestType(BaseModel):
     description: Optional[str] = None
 
     def __init__(self, **kwargs):
-        # if not kwargs.get("name") or len(kwargs.get("name")) < 5:
-        #     raise ECOMValueError(msg="Product name should have length more than 5")
+
+        if not kwargs.get("sub_category_name"):
+            raise ECOMValueError(msg="Sub Category name is required")
+        if not kwargs.get("category_name"):
+            raise ECOMValueError(msg="Category name is required")
         #
         # if not kwargs.get("product_image") or len(kwargs.get("product_image")) < 9:
         #     raise ECOMValueError(msg="Product image is required")
@@ -64,22 +67,10 @@ class AddSubCategoryRequestType(BaseModel):
         super().__init__(**kwargs)
 
     def save_to_db(self, seller_id):
-        # category_type = Category.objects.filter(name=self.category).first()
-        # if not category_type:
-        #     raise ECOMValueError(msg="Category is not listed")
-        #
-        # sub_category_type: SubCategory = SubCategory.objects.filter(
-        #     name=self.subCategory
-        # ).first()
-        # if not sub_category_type:
-        #     raise ECOMValueError(msg="Sub Category is not listed")
-        # elif sub_category_type.category != category_type:
-        #     raise ECOMValueError(msg="Category & Sub Category are not matching")
-        # self.category = None
-        # self.subCategory = None
-        # product: Product = Product(**self.model_dump())
-        # product.seller_id = seller_id
-        # product.category = category_type
-        # product.subCategory = sub_category_type
-        # product.save()
+        sub_category: SubCategory = SubCategory()
+        # sub_category.category = self.category_name
+        sub_category.name = self.sub_category_name
+        sub_category.product_image = self.image
+        sub_category.description = self.description
+        # sub_category.save()
         pass
