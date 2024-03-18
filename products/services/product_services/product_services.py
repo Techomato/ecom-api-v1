@@ -8,8 +8,6 @@ from products.models.export_models.export_product import (
     ExportECOMProductList,
 )
 from products.services.auth_services.seller_services import SellerServices
-from products.utils.interfaces.types.request_and_response_types.request_types.add_subCategory_request_type import \
-    AddSubCategoryRequestType
 from products.utils.interfaces.types.request_and_response_types.request_types.create_product_request_type import (
     CreateProductRequestType,
 )
@@ -72,6 +70,16 @@ class ProductServices:
         seller_id = SellerServices().get_seller_id(request=request)
         request_data.update_product_in_db(seller_id=seller_id)
         return ResponseData(successMessage="Product has been updated successfully.")
+
+    def add_category_service(
+        self, request_data: AddCategoryRequestType, request: Request
+    ) -> ResponseData:
+        seller_id = SellerServices().get_seller_id(request=request)
+        if seller_id:
+            request_data.save_to_db()
+            return ResponseData(successMessage="Category has been added successfully.")
+
+
 
     def add_subCategory_service(
         self, request_data: AddSubCategoryRequestType, request: Request
