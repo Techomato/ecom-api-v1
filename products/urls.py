@@ -11,4 +11,5 @@ urlpatterns = [
     path("add-product", CreatProductView.as_view(), name="add-product"),
     path("remove-product", RemoveProductView.as_view(), name="remove-product"),
     path("update-product", UpdateProductView.as_view(), name="update-product"),
+    path("add-subCategory", UpdateProductView.as_view(), name="add-subCategory"),
 ]

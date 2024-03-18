@@ -89,3 +89,7 @@ def validate_product_request_data(data: dict):
     validate_product_name(data.get("product_name"))
     validate_product_image(data.get("image"))
     validation_product_image_list(data.get("product_image_list"))
+
+
+def validate_subCategory(sub_category: dict):
+    pass
