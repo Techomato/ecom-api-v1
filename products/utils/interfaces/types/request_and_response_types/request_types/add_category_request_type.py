@@ -16,7 +16,7 @@ class AddCategoryRequestType(BaseModel):
 
         super().__init__(**kwargs)
 
-    def save_to_db(self, seller_id):
+    def save_to_db(self):
         category: Category = Category()
         category.name = self.category_name
         category.product_image = self.image

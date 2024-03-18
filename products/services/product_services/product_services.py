@@ -78,5 +78,6 @@ class ProductServices:
         self, request_data: AddCategoryRequestType, request: Request
     ) -> ResponseData:
         seller_id = SellerServices().get_seller_id(request=request)
-        request_data.save_to_db(seller_id=seller_id)
+        if seller_id:
+            request_data.save_to_db()
         return ResponseData(successMessage="Category has been added successfully.")
