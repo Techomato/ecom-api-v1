@@ -22,4 +22,3 @@ class AddCategoryRequestType(BaseModel):
         category.product_image = self.image
         category.description = self.description
         category.save()
-        pass
