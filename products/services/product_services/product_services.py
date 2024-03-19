@@ -2,7 +2,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from psycopg2 import DatabaseError
 from rest_framework.request import Request
 from ecom_exceptions.ecom_exceptions import ProductNotFoundError
+from products.models.db_models.category import Category
 from products.models.db_models.product import Product
+from products.models.export_models.export_category import (
+    ExportECOMCategoryList,
+    ExportECOMCategory,
+)
 from products.models.export_models.export_product import (
     ExportECOMProduct,
     ExportECOMProductList,
@@ -94,3 +99,21 @@ class ProductServices:
             return ResponseData(
                 successMessage="Sub Category has been added successfully."
             )
+
+    @staticmethod
+    def get_all_categories_subcategories_service() -> ExportECOMCategoryList:
+        try:
+            all_categories = Category.objects.all()
+            if all_categories:
+                category_list = [
+                    ExportECOMCategory(
+                        with_subcategories=True, **category.model_to_dict()
+                    )
+                    for category in all_categories
+                ]
+                all_products_list = ExportECOMCategoryList(category_list=category_list)
+                return all_products_list
+            else:
+                return ExportECOMCategoryList(category_list=[])
+        except ObjectDoesNotExist:
+            raise DatabaseError()

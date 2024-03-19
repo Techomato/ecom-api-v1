@@ -119,12 +119,13 @@ def validate_subCategory(data: dict):
     if not data.get("sub_category_name"):
         raise ECOMValueError(msg="Sub Category name is required")
 
-    sub_category_type: SubCategory = SubCategory.objects.get(
+    filtered_sub_category_type_list = SubCategory.objects.filter(
         name=data.get("sub_category_name")
     )
-    if sub_category_type:
+    if filtered_sub_category_type_list.exists():
         raise ECOMValueError(
-            msg=f"Sub Category name '{sub_category_type.name}' already available in '{sub_category_type.category.name}'"
+            msg=f"Sub Category name '{filtered_sub_category_type_list.first().name}' already available in "
+            f"'{filtered_sub_category_type_list.first().category.name}'"
         )
 
     if not data.get("category_name"):
