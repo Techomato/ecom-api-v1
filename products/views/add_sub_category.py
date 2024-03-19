@@ -11,8 +11,9 @@ from psycopg2 import DatabaseError
 
 from ecom_exceptions.base_exception import ECOMBaseException
 from products.services.product_services.product_services import ProductServices
-from products.utils.interfaces.types.request_and_response_types.request_types.add_subCategory_request_type import \
-    AddSubCategoryRequestType
+from products.utils.interfaces.types.request_and_response_types.request_types.add_subCategory_request_type import (
+    AddSubCategoryRequestType,
+)
 
 from products.utils.interfaces.types.request_and_response_types.response_types.base_response_type import (
     ResponseData,
