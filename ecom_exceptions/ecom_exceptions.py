@@ -8,7 +8,7 @@ from ecom_exceptions.base_exception import ECOMBaseException
 
 class ECOMValueError(ECOMBaseException):
     def __init__(self, name: Optional[str] = None, msg: Optional[str] = None):
-        self.status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        self.status = status.HTTP_422_UNPROCESSABLE_ENTITY
         if not name:
             self.name = "ECOMValueError"
         else:

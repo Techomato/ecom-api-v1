@@ -93,7 +93,13 @@ def validate_product_request_data(data: dict):
 
 def validate_category_name(category_name: str):
     if not category_name:
-        raise ECOMValueError(msg="Category Name is required")
+        raise ECOMValueError(msg="Category name is required")
+    else:
+        category_type = Category.objects.filter(name=category_name)
+        if category_type:
+            raise ECOMValueError(
+                msg=f"'{category_name}' category name already available"
+            )
 
 
 def validate_description(description: str):
@@ -107,3 +113,25 @@ def validate_category(category: dict):
     validate_product_image(category.get("image"))
 
     validate_description(category.get("description"))
+
+
+def validate_subCategory(data: dict):
+    if not data.get("sub_category_name"):
+        raise ECOMValueError(msg="Sub Category name is required")
+
+    sub_category_type: SubCategory = SubCategory.objects.get(
+        name=data.get("sub_category_name")
+    )
+    if sub_category_type:
+        raise ECOMValueError(
+            msg=f"Sub Category name '{sub_category_type.name}' already available in '{sub_category_type.category.name}'"
+        )
+
+    if not data.get("category_name"):
+        raise ECOMValueError(msg="Category name is required")
+
+    validate_category_type(data.get("category_name"))
+
+    validate_product_image(data.get("image"))
+
+    validate_description(data.get("description"))
