@@ -7,15 +7,11 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from drf_spectacular.utils import extend_schema
 
 from ecom_exceptions.base_exception import ECOMBaseException
 from products.models.export_models.export_category import ExportECOMCategoryList
-from products.models.export_models.export_product import ExportECOMProductList
-from products.utils.interfaces.types.request_and_response_types.response_types.all_category_subcategory_response_type import \
-    AllCategorySubcategoryResponseData
-from products.utils.interfaces.types.request_and_response_types.response_types.all_product_response_type import (
-    AllProductResponseData,
+from products.utils.interfaces.types.request_and_response_types.response_types.all_category_subcategory_response_type import (
+    AllCategorySubcategoryResponseData,
 )
 from products.services.product_services.product_services import ProductServices
 from products.utils.interfaces.types.request_and_response_types.response_types.base_response_type import (
@@ -31,7 +27,9 @@ class AllCategoriesSubCategories(APIView):
     # )
     def get(self, _):
         try:
-            all_cat_subCat = ProductServices().get_all_categories_subcategories_service()
+            all_cat_subCat = (
+                ProductServices().get_all_categories_subcategories_service()
+            )
             if all_cat_subCat and isinstance(all_cat_subCat, ExportECOMCategoryList):
                 data = AllCategorySubcategoryResponseData(data=all_cat_subCat)
                 return Response(
