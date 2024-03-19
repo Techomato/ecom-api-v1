@@ -1,6 +1,5 @@
 import datetime
-import typing
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 from pydantic import BaseModel
 
@@ -15,4 +14,4 @@ class ExportECOMSubCategory(BaseModel):
 
 
 class ExportECOMSubCategoryList(BaseModel):
-    sub_category_list: typing.List[ExportECOMSubCategory]
+    sub_category_list: Optional[List[ExportECOMSubCategory]] = None

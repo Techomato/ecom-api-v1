@@ -106,7 +106,9 @@ class ProductServices:
             all_categories = Category.objects.all()
             if all_categories:
                 category_list = [
-                    ExportECOMCategory(**category.model_to_dict())
+                    ExportECOMCategory(
+                        with_subcategories=True, **category.model_to_dict()
+                    )
                     for category in all_categories
                 ]
                 all_products_list = ExportECOMCategoryList(category_list=category_list)
