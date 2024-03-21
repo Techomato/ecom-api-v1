@@ -101,7 +101,7 @@ def validate_brand(brand: str):
 
 
 def validate_stock(stock: int):
-    if not stock or int(stock) <= 0:
+    if not stock or int(stock) < 0:
         raise ECOMValueError(
             msg="Product quantity can not be zero or negative or fractional"
         )
@@ -144,14 +144,14 @@ def validate_image_for_add_product(image: str):
     validate_product_image(image)
 
 
-def validate_product_name_for_product_name(product_name: str):
+def validate_product_name_for_add_product(product_name: str):
     if not product_name:
         raise ECOMValueError(msg="Product name is required")
     validate_product_name(product_name)
 
 
 def validate_add_request_product_data(data: dict):
-    validate_product_name_for_product_name(data.get("name"))
+    validate_product_name_for_add_product(data.get("name"))
     validate_image_for_add_product(data.get("product_image"))
     validate_brand(data.get("brand"))
     validate_category_name_for_add_product(data.get("category"))
