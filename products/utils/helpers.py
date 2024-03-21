@@ -132,8 +132,6 @@ def validate_offer_price_for_add_product(actual_price: Decimal, offer_price: Dec
 
 
 def validate_stock_for_add_product(stock: int):
-    if not stock:
-        raise ECOMValueError(msg="Product stock value is required")
     if not isinstance(stock, int):
         validate_stock(stock)
 
