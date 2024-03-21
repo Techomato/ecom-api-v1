@@ -8,7 +8,7 @@ from ecom_exceptions.ecom_exceptions import ECOMValueError, ProductNotFoundError
 from products.models.db_models.category import Category
 from products.models.db_models.product import Product
 from products.models.db_models.sub_category import SubCategory
-from products.utils.helpers import is_valid_uuid, validate_product_request_data
+from products.utils.helpers import is_valid_uuid, validate_update_request_product_data
 
 
 class UpdateProductRequestType(BaseModel):
@@ -28,7 +28,7 @@ class UpdateProductRequestType(BaseModel):
         if not kwargs.get("id") or not is_valid_uuid(kwargs.get("id")):
             raise ECOMValueError(msg="Product ID is invalid")
 
-        validate_product_request_data(kwargs)
+        validate_update_request_product_data(kwargs)
         super().__init__(**kwargs)
 
     def update_product_in_db(self, seller_id):

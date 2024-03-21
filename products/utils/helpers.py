@@ -75,9 +75,11 @@ def validation_product_image_list(product_image_list: List[str]):
     if product_image_list:
         for image in product_image_list:
             validate_product_image(image)
+    if product_image_list is not None and len(product_image_list) == 0:
+        raise ECOMValueError(msg="Product image list can't be empty")
 
 
-def validate_product_request_data(data: dict):
+def validate_update_request_product_data(data: dict):
     validate_actual_price(data.get("actual_price"))
     validate_offer_price(
         offer_price=data.get("offer_price"), actual_price=data.get("actual_price")
@@ -88,6 +90,78 @@ def validate_product_request_data(data: dict):
     )
     validate_product_name(data.get("product_name"))
     validate_product_image(data.get("image"))
+    validation_product_image_list(data.get("product_image_list"))
+
+
+def validate_brand(brand: str):
+    if brand == "":
+        raise ECOMValueError(msg="Brand is required")
+    if not brand:
+        raise ECOMValueError(msg="Brand is required")
+
+
+def validate_stock(stock: int):
+    if not stock or int(stock) <= 0:
+        raise ECOMValueError(msg="Product quantity can not be zero or negative or fractional")
+
+
+def validate_category_name_for_add_product(category: str):
+    if not category:
+        raise ECOMValueError(msg="Category Name is required")
+    validate_category_type(category)
+
+
+def validate_subcategory_name_for_add_product(subcategory: str, category: str):
+    if not subcategory:
+        raise ECOMValueError(msg="Sub Category Name is required")
+    validate_subcategory_type(subcategory_type=subcategory, category_type=category)
+
+
+def validate_actual_price_for_add_product(actual_price: Decimal):
+    if not actual_price:
+        raise ECOMValueError(msg="Actual Price is required")
+    validate_actual_price(str(actual_price))
+
+
+def validate_offer_price_for_add_product(actual_price: Decimal, offer_price: Decimal):
+    if not offer_price:
+        raise ECOMValueError(msg="Offer Price is required")
+    validate_offer_price(offer_price=str(offer_price), actual_price=str(actual_price))
+
+
+def validate_stock_for_add_product(stock: int):
+    if not stock:
+        raise ECOMValueError(msg="Product stock value is required")
+    if not isinstance(stock, int):
+        validate_stock(stock)
+
+
+def validate_image_for_add_product(image: str):
+    if not image:
+        raise ECOMValueError(msg="Product image is required")
+    validate_product_image(image)
+
+
+def validate_product_name_for_product_name(product_name: str):
+    if not product_name:
+        raise ECOMValueError(msg="Product name is required")
+    validate_product_name(product_name)
+
+
+def validate_add_request_product_data(data: dict):
+    validate_product_name_for_product_name(data.get("name"))
+    validate_image_for_add_product(data.get("product_image"))
+    validate_brand(data.get("brand"))
+    validate_category_name_for_add_product(data.get("category"))
+    validate_subcategory_name_for_add_product(
+        subcategory=data.get("subCategory"), category=data.get("category")
+    )
+    validate_description(data.get("description"))
+    validate_actual_price_for_add_product(data.get("actual_price"))
+    validate_offer_price_for_add_product(
+        offer_price=data.get("offer_price"), actual_price=data.get("actual_price")
+    )
+    validate_stock_for_add_product(data.get("countInStock"))
     validation_product_image_list(data.get("product_image_list"))
 
 
