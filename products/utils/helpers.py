@@ -102,7 +102,9 @@ def validate_brand(brand: str):
 
 def validate_stock(stock: int):
     if not stock or int(stock) <= 0:
-        raise ECOMValueError(msg="Product quantity can not be zero or negative or fractional")
+        raise ECOMValueError(
+            msg="Product quantity can not be zero or negative or fractional"
+        )
 
 
 def validate_category_name_for_add_product(category: str):
