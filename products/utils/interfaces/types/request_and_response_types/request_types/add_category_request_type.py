@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 from products.models.db_models.category import Category
-from products.utils.helpers import validate_category
+from products.utils.helpers import validate_add_category_request_type
 
 
 class AddCategoryRequestType(BaseModel):
@@ -12,7 +12,7 @@ class AddCategoryRequestType(BaseModel):
     description: Optional[str] = None
 
     def __init__(self, **kwargs):
-        validate_category(category=kwargs)
+        validate_add_category_request_type(category=kwargs)
 
         super().__init__(**kwargs)
 

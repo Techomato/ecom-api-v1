@@ -165,7 +165,7 @@ def validate_add_request_product_data(data: dict):
     validation_product_image_list(data.get("product_image_list"))
 
 
-def validate_category_name(category_name: str):
+def validate_only_category_name(category_name: str):
     if not category_name:
         raise ECOMValueError(msg="Category name is required")
     else:
@@ -181,8 +181,8 @@ def validate_description(description: str):
         raise ECOMValueError(msg="Description can not be empty")
 
 
-def validate_category(category: dict):
-    validate_category_name(category.get("category_name"))
+def validate_add_category_request_type(category: dict):
+    validate_only_category_name(category.get("category_name"))
 
     validate_product_image(category.get("image"))
 
@@ -210,3 +210,53 @@ def validate_subCategory(data: dict):
     validate_product_image(data.get("image"))
 
     validate_description(data.get("description"))
+
+
+def validate_max_min_price_for_filter(max_price: int, min_price: int):
+    if min_price is not None:
+        if not isinstance(min_price, int) or min_price < 0:
+            raise ECOMValueError(msg="Min Price should be a positive number")
+
+    if max_price is not None:
+        if not isinstance(max_price, int) or max_price < 0:
+            raise ECOMValueError(msg="Max Price should be a positive number")
+
+    if min_price is not None and max_price is not None:
+        if min_price > max_price:
+            raise ECOMValueError(
+                msg="Min Price should be less than or equal to Max Price"
+            )
+
+
+def validate_rating_for_filter(rating: int):
+    valid_ratings = [0, 1, 2, 3, 4, 5]
+    if rating == "":
+        raise ECOMValueError(msg="Rating is required")
+    if rating not in valid_ratings:
+        raise ECOMValueError(msg="Enter valid rating")
+    pass
+
+
+def validate_filter_product_request_data(data: dict):
+    if not data or data is None or data == {}:
+        raise ECOMValueError(msg="At least one parameter is required")
+    else:
+        if data.get("category"):
+            validate_category_type(data.get("category"))
+
+        if data.get("subcategory"):
+            validate_subcategory_type(
+                category_type=data.get("category"),
+                subcategory_type=data.get("subcategory"),
+            )
+
+        if data.get("brand"):
+            validate_brand(data.get("brand"))
+
+        if data.get("max_price") or data.get("min_price"):
+            validate_max_min_price_for_filter(
+                max_price=data.get("max_price"), min_price=data.get("min_price")
+            )
+
+        if data.get("rating"):
+            validate_rating_for_filter(data.get("rating"))

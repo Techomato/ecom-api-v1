@@ -9,8 +9,8 @@ from products.models.db_models.sub_category import SubCategory
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "brand", "updated_at")
-    list_filter = ("seller_id",)
+    list_display = ("name", "category", "subCategory", "brand", "updated_at")
+    list_filter = ("seller_id", "category", "subCategory", "brand")
     ordering = ["updated_at"]
 
 

@@ -22,6 +22,9 @@ from products.utils.interfaces.types.request_and_response_types.request_types.ad
 from products.utils.interfaces.types.request_and_response_types.request_types.create_product_request_type import (
     CreateProductRequestType,
 )
+from products.utils.interfaces.types.request_and_response_types.request_types.filter_product_request_type import (
+    FilterProductRequestType,
+)
 from products.utils.interfaces.types.request_and_response_types.request_types.remove_product_request_type import (
     RemoveProductRequestType,
 )
@@ -37,7 +40,7 @@ class ProductServices:
     @staticmethod
     def get_all_products_service() -> ExportECOMProductList:
         try:
-            get_all_products_from_db = Product.objects.all()
+            get_all_products_from_db = Product.objects.all()[:10]
         except Exception:
             raise DatabaseError()
         if get_all_products_from_db:
@@ -115,5 +118,30 @@ class ProductServices:
                 return all_products_list
             else:
                 return ExportECOMCategoryList(category_list=[])
+        except ObjectDoesNotExist:
+            raise DatabaseError()
+
+    def get_filter_product_service(
+        self, request_data: FilterProductRequestType
+    ) -> ExportECOMProductList:
+        try:
+            filter_products = Product.objects.filter(
+                brand=request_data.brand,
+                category__name=request_data.category,
+                subCategory__name=request_data.subcategory,
+                rating=request_data.rating,
+            )
+
+            if filter_products:
+                all_products_list = []
+                for prd in filter_products:
+                    product_export = ExportECOMProduct(**prd.model_to_dict())
+                    all_products_list.append(product_export)
+                all_products_list = ExportECOMProductList(
+                    product_list=all_products_list
+                )
+                return all_products_list[:5]
+            else:
+                return ExportECOMProductList(product_list=[])
         except ObjectDoesNotExist:
             raise DatabaseError()
